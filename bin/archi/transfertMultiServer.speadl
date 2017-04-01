@@ -1,0 +1,40 @@
+
+
+import interfaces.InterfaceServer
+import interfaces.InterfaceClient
+
+namespace definitionsComposants{
+	
+	component ComposantClientTransfert{
+		provides unTransfert: InterfaceClient
+		requires unServer: InterfaceServer
+	}
+	
+	component ComposantPont{
+		provides unServicePont: InterfaceServer
+		requires premierService: InterfaceServer
+		requires secondService: InterfaceServer
+		requires troisiemeService: InterfaceServer
+	}
+	
+	component ComposantServerTransfert{
+		provides unService: InterfaceServer
+	}
+	
+	component TransfertMultiple{
+		provides unTransfertMultiple: InterfaceClient= client.unTransfert
+		
+		part client: ComposantClientTransfert{
+			bind unServer to pont.unServicePont
+		}
+		
+		part pont: ComposantPont{
+			bind premierService to server.unService
+			bind secondService to server.unService
+			bind troisiemeService to server.unService
+		}
+		
+		part server: ComposantServerTransfert
+	}
+	
+}

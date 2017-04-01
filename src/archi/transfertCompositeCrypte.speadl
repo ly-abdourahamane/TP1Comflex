@@ -1,0 +1,42 @@
+import interfaces.InterfaceClient
+import interfaces.InterfaceServer
+
+namespace definitionsComposants{
+	
+	component ComposantClientTransfert{
+		provides unTransfert: InterfaceClient
+		requires unServer: InterfaceServer
+	}
+	
+	component ComposantCryptageTransfert{
+		provides serviceCryptage: InterfaceServer
+		requires unDecryptage: InterfaceServer
+	}
+	
+	component ComposantDecryptageTansfert{
+		provides serviceDecryptage: InterfaceServer
+		requires unServerFinal: InterfaceServer
+	}
+	
+	component ComposantServerTransfert{
+		provides unService: InterfaceServer
+	}
+	
+	component TransfertCompositeCrypte{
+		provides unServiceTransfertCrypte: InterfaceClient = client.unTransfert
+		
+		part client:ComposantClientTransfert{
+			bind unServer to cryptage.serviceCryptage
+		}
+		
+		part cryptage:ComposantCryptageTransfert{
+			bind unDecryptage to decryptage.serviceDecryptage
+		}
+		
+		part decryptage:ComposantDecryptageTansfert{
+			bind unServerFinal to server.unService
+		}
+		
+		part server:ComposantServerTransfert
+	}
+}

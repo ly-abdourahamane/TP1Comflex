@@ -1,0 +1,26 @@
+import interfaces.InterfaceClient
+import interfaces.InterfaceServer
+
+namespace definitionsComposants{
+	
+	component ComposantClientTransfert{
+		provides unTransfert: InterfaceClient
+		requires unServer: InterfaceServer
+	}
+	
+	component ComposantServerTransfert{
+		provides unService: InterfaceServer
+	}
+	
+	component TransfertComposite{
+		
+		provides unServiceTransfer: InterfaceClient = client.unTransfert
+		
+		part client:ComposantClientTransfert{
+			bind unServer to server.unService
+		}
+		
+		part server:ComposantServerTransfert
+	}
+	
+}

@@ -1,0 +1,9 @@
+import interfaces.InterfaceSimple;
+
+namespace definitionsComposants{
+
+	component ComposantSimple{
+		provides monPortdeService:InterfaceSimple
+	}
+
+}

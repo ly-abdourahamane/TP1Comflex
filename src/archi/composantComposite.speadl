@@ -1,0 +1,25 @@
+import interfaces.InterfaceAmeliore
+import interfaces.InterfaceBasique
+
+namespace definitionsComposants{
+	
+	component ComposantClient{
+		provides unServiceAmeliore: InterfaceAmeliore
+		requires unServiceBasique: InterfaceBasique
+	}
+	
+	component ComposantServer{
+		provides unServiceSimple: InterfaceBasique
+	}
+	
+	component ComposantComposite{
+		
+		provides unServiceComplet: InterfaceAmeliore = client.unServiceAmeliore
+		
+		part client: ComposantClient{
+			bind unServiceBasique to server.unServiceSimple
+		}
+		
+		part server:ComposantServer
+	}
+}
